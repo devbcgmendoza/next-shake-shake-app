@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import useShakeDetector from "./hooks/useShakeDetector";
 
 export default function Home() {
@@ -8,6 +8,7 @@ export default function Home() {
   const [showCombo, setShowCombo] = useState(false)
   const [score, setScore] = useState(0);
   const [timer, setTimer] = useState(10); // Start at 10 seconds
+  const timeoutRef = useRef(null);
 
   // Memoize createCoin to prevent unnecessary re-renders
   const createCoin = useCallback(() => {
@@ -34,9 +35,24 @@ export default function Home() {
 
   useEffect(() => {
     if (isShaking && shakeIntensity >= 15) {
-      setShowCombo(true)
-      setScore((prev) => prev + 1);
+      setShowCombo(true);
       createCoins();
+
+      // Clear the previous timeout if there is one
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+
+      // Set a new timeout to increment the score after 1000ms
+      timeoutRef.current = setTimeout(() => {
+        setScore((prev) => prev + 1);
+      }, 1000);
+    } else {
+      // Clear the timeout if the shake stops
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
     }
   }, [isShaking, shakeIntensity, createCoins]); // Include createCoins as dependency
 
