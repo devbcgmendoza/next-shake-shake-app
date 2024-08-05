@@ -5,6 +5,7 @@ import useShakeDetector from "./hooks/useShakeDetector";
 
 export default function Home() {
   const { isShaking, shakeIntensity } = useShakeDetector();
+  const [showCombo, setShowCombo] = useState(false)
   const [score, setScore] = useState(0);
   const [timer, setTimer] = useState(10); // Start at 10 seconds
 
@@ -32,7 +33,8 @@ export default function Home() {
   }, [createCoin]); // Dependency on createCoin to ensure createCoins has the correct version of createCoin
 
   useEffect(() => {
-    if (isShaking && shakeIntensity > 10) {
+    if (isShaking && shakeIntensity >= 15) {
+      setShowCombo(true)
       setScore((prev) => prev + 1);
       createCoins();
     }
@@ -53,6 +55,7 @@ export default function Home() {
       <div className="w-96 h-96 z-10 text-center" id="container">
         <p>score: {score}</p>
         <p>timer: {timer}</p>
+        <p>Show combo: {showCombo}</p>
       </div>
     </main>
   );
