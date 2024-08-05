@@ -31,3 +31,23 @@ body {
     text-wrap: balance;
   }
 }
+
+/* styles.css */
+
+@keyframes fall {
+  0% {
+    transform: translateY(-50px); /* Start above the container */
+  }
+  100% {
+    transform: translateY(100vh); /* End below the viewport */
+  }
+}
+
+.coin {
+  position: absolute; /* Ensure positioning is relative to container */
+  width: 30px; /* Example size */
+  height: 30px; /* Example size */
+  background: gold; /* Example color */
+  border-radius: 50%; /* Example shape */
+  animation: fall 2s linear; /* Apply the fall animation */
+}
