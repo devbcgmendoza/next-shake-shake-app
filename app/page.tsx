@@ -8,7 +8,7 @@ export default function Home() {
   const [showCombo, setShowCombo] = useState(false)
   const [score, setScore] = useState(0);
   const [timer, setTimer] = useState(10); // Start at 10 seconds
-  const timeoutRef = useRef(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Memoize createCoin to prevent unnecessary re-renders
   const createCoin = useCallback(() => {
