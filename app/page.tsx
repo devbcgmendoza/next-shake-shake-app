@@ -27,7 +27,7 @@ export default function Home() {
 
   // Memoize createCoins to prevent unnecessary re-renders
   const createCoins = useCallback(() => {
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 5; i++) {
       setTimeout(createCoin, i * 100);
     }
   }, [createCoin]); // Dependency on createCoin to ensure createCoins has the correct version of createCoin
@@ -55,7 +55,7 @@ export default function Home() {
       <div className="w-96 h-96 z-10 text-center" id="container">
         <p>score: {score}</p>
         <p>timer: {timer}</p>
-        <p>Show combo: {showCombo}</p>
+        <p>Show combo: {showCombo ? "true" : "false"}</p>
       </div>
     </main>
   );
